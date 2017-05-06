@@ -1,0 +1,36 @@
+<template name="home">
+    
+    <header class="intro-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 col-heading">
+                    <div class="page-heading">
+                        <h1>Purrcipes</h1>
+                        <hr class="small">
+                        <span class="subheading">Cooking while your cat watches you.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="row">
+        {{#each getRecipeGroups}}
+            {{> recipe_group}}
+        {{/each}}
+        </div>
+    </div>
+    
+</template>
+
+<template name="recipe_group">
+    <div class="col-xs-6 col-sm-4 col-md-3 col-group">
+        <a href="/{{group_url}}" class="recipebox center-block">
+            <h4 class="text-center">{{group}}</h4>
+            <div class="hover-effect-zoom">
+                <img class="img-responsive" src="{{img_src}}" alt="">
+            </div>
+        </a>
+    </div>
+</template>

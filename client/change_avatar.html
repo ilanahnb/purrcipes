@@ -1,0 +1,56 @@
+<template name="change_avatar">
+    <!-- Button trigger modal -->                            
+    <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#changeAvatar" id="change-avatar-button">change avatar</a>
+
+    <!-- Modal -->
+    <div class="modal fade" id="changeAvatar" tabindex="-1" role="dialog" aria-labelledby="changeAvatarLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h4 class="modal-title" id="changeAvatarLabel">Change my Avatar</h4>
+                </div>
+                <div class="modal-body">
+                    {{> uploadAvatarForm}}
+
+                    {{> uploadedAvatar}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default js-keep-avatar" data-dismiss="modal" data-loading-text="Canceling...">Cancel</button>
+                    <button type="submit" class="btn btn-primary js-save-avatar" data-loading-text="Saving...">Save image</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<template name="uploadAvatarForm">
+    {{#with currentUpload}}
+    Uploading <b>{{file.name}}</b>: 
+    <span id="progress">{{progress.get}}%</span>
+    {{else}}
+    
+    <div class="box">
+        <input type="file" name="file" id="avatarInput" class="inputfile" />
+        <label for="avatarInput"><i class="fa fa-upload" aria-hidden="true"></i> &nbsp; Choose an image</label>
+    </div>
+    
+    {{/with}}
+</template>
+
+
+<template name="uploadedAvatar">
+    <div class="uploadedAvatar">
+        <div class="loading-spinner">
+            <i class="fa fa-spinner fa-spin fa-5x" aria-hidden="true"></i>
+        </div>
+        {{#if uploadedFile}}
+        <img src="{{uploadedFile.link}}?download=true" class="img-responsive" id="{{avatarId}}">
+        {{else}}
+        <img src="{{currentUser.avatar}}" class="img-responsive">
+        {{/if}}
+    </div>
+</template>

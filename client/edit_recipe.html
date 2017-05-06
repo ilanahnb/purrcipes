@@ -1,0 +1,87 @@
+<template name="edit_recipe_form">
+    
+    <!-- Button trigger modal -->
+    <a class="btn btn-primary btn-sm js-edit-recipe" href="#" data-toggle="modal" data-target="#editModal">
+        <i class="fa fa-pencil-square-o fa-lg hidden-xs"></i>
+        <i class="fa fa-pencil-square-o visible-xs"></i>
+    </a>
+
+    <!-- Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h4 class="modal-title" id="editModalLabel">Edit the recipe</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="js-edit-recipe-form">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-4">
+                                <label for="RecipeName">Recipe name</label>
+                                <input type="text" class="form-control" id="RecipeName">
+                                <div class="alert alert-danger my-alert" role="alert" id="emptyName">Oh no! The recipe doesn't have a name!</div>
+                                <div class="alert alert-danger my-alert" role="alert" id="uniqueName">This name is taken! Please write a different name.</div>
+                            </div>
+
+                            <div class="col-sm-6 col-md-4">
+                                <label for="RecipeCategory">Category</label>
+                                <select class="form-control" id="RecipeCategory">
+                                    <option>Breakfast</option>
+                                    <option>Desserts</option>
+                                    <option>Drinks</option>
+                                    <option>Healthy</option>
+                                    <option>Main Course</option>
+                                    <option>Meats</option>
+                                    <option>Snacks</option>
+                                    <option>Soups and Stews</option>
+                                </select>
+                                <div class="alert alert-danger my-alert" role="alert" id="emptyCategory">What type of recipe is it?</div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-4">
+                                <label for="RecipePicture">Add Picture</label>
+                                {{> uploadForm}}
+
+                                {{> uploadedFile}}
+                                
+                                <div class="alert alert-danger my-alert" role="alert" id="emptyPicture">Please add a picture.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="RecipeDescription">Description</label>
+                                <textarea class="form-control" id="RecipeDescription" rows="3"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="RecipeIngredients">Ingredients</label>
+                                <textarea class="form-control" id="RecipeIngredients" rows="6"></textarea>
+                                <div class="alert alert-danger my-alert" role="alert" id="emptyIngredients">Please add at least one ingredient.</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="RecipeDirections">Directions</label>
+                                <textarea class="form-control" id="RecipeDirections" rows="6"></textarea>
+                                <div class="alert alert-danger my-alert" role="alert" id="emptyDirections">Please write the directions.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="row modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary js-save-changes" data-loading-text="Saving...">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,30 @@
+<template name="delete_recipe_button">
+    <!-- Button trigger modal to confirm delete -->
+    <a class="btn btn-danger btn-sm js-delete-recipe" href="#" data-toggle="modal" data-target="#deleteModal">
+        <i class="fa fa-trash-o fa-lg hidden-xs"></i>
+        <i class="fa fa-trash-o visible-xs"></i>
+    </a>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h4 class="modal-title">Delete recipe "{{getRecipeName}}"?</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you really sure you want to permanently delete this recipe forever?</p>
+                    <p>This can never ever be undone... <i class="fa fa-frown-o" aria-hidden="true"></i></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Keep recipe</button>
+                    <button type="button" class="btn btn-danger js-confirm-delete-recipe" data-loading-text="Deleting..." id="">Delete recipe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</template>

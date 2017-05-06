@@ -1,0 +1,80 @@
+<template name="login">
+    <a href="#" class="hidden-xs" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Log in</a>
+    
+    <a href="#" class="visible-xs" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-sign-in fa-fw" aria-hidden="true"></i> Log in
+    </a>
+    <ul id="login-dropdown" class="dropdown-menu">
+        <form class="login">
+            <label for="login-username">Username or Email</label>
+            <input type="text" class="form-control" id="login-username">
+
+            <label for="login-password">Password</label>
+            <input type="password" class="form-control" id="login-password">
+
+            <div class="alert alert-danger" role="alert" id="login-messages"></div>
+            
+            <button type="submit" class="btn btn-primary">Log in</button>
+        </form>
+    </ul>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="forgotPassword" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h4 class="modal-title">Reset your password</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Enter your email address below. We'll look for your account and send you a password reset email.</p>
+                    <input type="text" class="form-control" placeholder="Email" id="send-reset-email">
+                    
+                    <div class="alert alert-danger" role="alert" id="reset-password-error"></div>
+                    <div class="alert alert-success" role="alert" id="reset-password-success">An email for reseting your password was sent!</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary js-email-reset-password" data-loading-text="Reseting...">Reset Password</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<template name="register">
+    <a href="#" class="hidden-xs" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sign up</a>
+    
+    <a href="#" class="visible-xs" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-address-book fa-fw" aria-hidden="true"></i> Sign up
+    </a>    
+    
+    <ul id="login-dropdown" class="dropdown-menu">
+        <form class="register">
+            <label for="register-username">Username</label><i class="fa fa-spinner" id="fa-invisible"></i>
+            <input type="text" class="form-control" id="register-username">
+            
+            <label for="register-email">Email</label>
+            <input type="text" class="form-control" id="register-email">
+
+            <label for="register-password">Password</label>
+            <input type="password" class="form-control" id="register-password">
+
+            <label for="register-password-again">Confirm Password</label>
+            <input type="password" class="form-control" id="register-password-again">
+            
+            {{> reCAPTCHA}}
+            
+            <div class="alert alert-danger" role="alert" id="sign-up-error-msg"></div>
+            
+            <button type="submit" class="btn btn-primary" id="sign-up-button" data-loading-text="<i class='fa fa-spinner fa-spin fa-lg'></i>">Sign up</button>
+            
+            <p class="help-block">
+                By creating an account you can save your favourite recipes and share your own recipes!
+            </p>
+        </form>
+    </ul>
+</template>

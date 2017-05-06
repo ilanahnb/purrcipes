@@ -1,0 +1,13 @@
+{
+  "name": "purrcipes",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "dropbox": "^0.10.3",
+    "file-system": "^2.2.2",
+    "meteor-node-stubs": "^0.2.6",
+    "request": "^2.81.0"
+  }
+}

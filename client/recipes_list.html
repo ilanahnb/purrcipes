@@ -1,0 +1,87 @@
+<template name="recipes_list">
+    
+    <div class="container">
+        
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="/">Recipes</a></li>
+                <li class="active">{{group}}</li>
+            </ol>
+        </div>
+        
+        <div class="row page-title-row">
+            <div class="col-xs-12 col-white-box">
+                <h1>{{group}}</h1>
+                <hr class="small">
+                {{#if countRecipes}}
+                    <p>Showing {{{countRecipes}}}.</p>
+                {{else}}
+                    <p>There's no recipes in this category yet! So bad...</p>
+                {{/if}}
+            </div>
+        </div>
+        
+        {{#each getRecipes}}
+            {{> recipe_item}}
+        {{/each}}
+        
+        {{#if showMoreRecipes}}
+        <div class="row bottom-button">
+            <button type="button" class="btn btn-primary btn-block js-load-more-recipes">
+                Show more recipes
+            </button>
+        </div>
+        {{/if}}
+        {{#if hasManyRecipes}}
+        <div class="text-center bottom-button">
+            <p>
+                <a type="button" class="btn btn-primary js-to-the-top">
+                    <i class="fa fa-arrow-up fa-fw" aria-hidden="true"></i> Back to top
+                </a>
+            </p>
+        </div>
+        {{/if}}
+        
+    </div>
+</template>
+
+<template name="recipe_item">
+    <div class="row" id="{{recipe_name}}">
+        <div class="col-xs-12 col-recipe">
+            <div class="col-sm-4 col-md-3">
+                <a href="/{{group_url}}/{{url}}">
+                    <img src="{{recipe_picture}}" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-xs-8 col-sm-6 col-md-7" data-id={{_id}}>
+                <a href="/{{group_url}}/{{url}}">
+                    <h4>{{recipe_name}}</h4>
+                </a>
+                {{#if currentUser}}
+                    {{>starsRating rating=rating mutable="true" star="\\f005" class="js-rate-recipe"}}
+                {{else}}
+                    {{>starsRating rating=rating star="\\f005" class="js-rate-recipe"}}
+                {{/if}}
+                <small class="num-votes">{{numVotes}}</small>
+                <p>{{recipe_description}}</p>
+                <p>Shared by 
+                    {{#if sharedBy}}
+                    <a href="/members/{{sharedBy}}">{{sharedBy}}</a>
+                    {{else}}
+                    <i>someone</i>
+                    {{/if}}
+                    on {{createdOn}}
+                </p>
+            </div>
+            {{#if createdByCurrentUser}}
+            <div class="col-xs-4 col-sm-2">
+                <div class="btn-group pull-right">
+                    {{> edit_recipe_form}}
+
+                    {{> delete_recipe_button}}
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+</template>

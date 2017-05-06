@@ -1,0 +1,73 @@
+<template name="user_recipes">
+    
+    <div class="container user-recipes">
+        
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="/">Recipes</a></li>
+                <li><a href="/members">Members</a></li>
+                <li class="active">{{username}}</li>
+            </ol>
+        </div>
+        
+        <div class="row page-title-row">
+            <div class="col-xs-12 col-white-box col-user-avatar">
+                <div class="user-avatar">
+                    <img src="{{avatar}}" class="img-thumbnail">
+                </div>
+                <div class="user-title">
+                    <h1>{{username}}</h1>
+                    <hr>
+                    {{#if countRecipes}}
+                        <p>{{username}} has shared {{{countRecipes}}}.</p>
+                    {{else}}
+                        <p>{{username}} hasn't shared any recipes yet...</p>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        
+        {{#each getUserRecipes}}
+            {{> user_recipe_item}}
+        {{/each}}
+        
+        {{#if showMoreRecipes}}
+        <div class="row bottom-button">
+            <button type="button" class="btn btn-primary btn-block js-load-more-recipes">
+                Show more recipes
+            </button>
+        </div>
+        {{/if}}
+        {{#if hasManyRecipes}}
+        <div class="text-center bottom-button">
+            <p>
+                <a type="button" class="btn btn-primary js-to-the-top">
+                    <i class="fa fa-arrow-up fa-fw" aria-hidden="true"></i> Back to top
+                </a>
+            </p>
+        </div>
+        {{/if}}
+        
+    </div>
+</template>
+
+<template name="user_recipe_item">
+    <div class="row" id="{{recipe_name}}">
+        <div class="col-xs-12 col-recipe">
+            <div class="col-sm-4 col-md-3">
+                <a href="/{{group_url}}/{{url}}">
+                    <img src="{{recipe_picture}}" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-xs-8 col-sm-6 col-md-7" data-id={{_id}}>
+                <a href="/{{group_url}}/{{url}}">
+                    <h4>{{recipe_name}}</h4>
+                </a>
+                {{>starsRating rating=rating mutable="true" star="\\f005" class="js-rate-recipe"}}
+                <small class="num-votes">{{numVotes}}</small>
+                <p>{{recipe_description}}</p>
+                <p>Created on {{createdOn}}</p>
+            </div>
+        </div>
+    </div>
+</template>

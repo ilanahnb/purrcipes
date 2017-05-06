@@ -1,0 +1,66 @@
+<template name="all_users">
+    
+    <div class="container">
+        
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="/">Recipes</a></li>
+                <li class="active">Members</li>
+            </ol>
+        </div>
+        
+        <div class="row page-title-row">
+            <div class="col-xs-12 col-white-box">
+                <h1>Members</h1>
+                <hr class="small">
+                <p>
+                    Showing 
+                    <span class="badge">{{countUsers}}</span>
+                    members.
+                </p>
+            </div>
+        </div>
+        
+        <div class="row">
+            {{#each getUsers}}
+                {{> one_user}}
+            {{/each}}
+        </div>
+        
+        {{#if showMoreUsers}}
+        <div class="row bottom-button">
+            <button type="button" class="btn btn-primary btn-block js-load-more-users">
+                Show more users
+            </button>
+        </div>
+        {{/if}}
+        {{#if hasManyUsers}}
+        <div class="text-center bottom-button">
+            <p>
+                <a type="button" class="btn btn-primary js-to-the-top">
+                    <i class="fa fa-arrow-up fa-fw" aria-hidden="true"></i> Back to top
+                </a>
+            </p>
+        </div>
+        {{/if}}
+    </div>
+</template>
+
+<template name="one_user">
+    <div class="col-xs-4 col-sm-3 col-md-2 col-group" id="{{username}}">
+        <a href="/members/{{username}}" class="recipebox center-block">
+            <h4 class="text-center">
+                {{username}}
+                {{#if countRecipes}}
+                    <br/><small>{{countRecipes}}</small>
+                {{else}}
+                    <br/><small>no recipes</small>
+                {{/if}}
+
+            </h4>
+            <div class="hover-effect-zoom">
+                <img class="img-responsive" src="{{avatar}}" alt="avatar of {{username}}" id="user-avatar">
+            </div>
+        </a>
+    </div>
+</template>

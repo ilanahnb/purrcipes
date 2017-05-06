@@ -1,0 +1,142 @@
+<template name="header">
+    <div class="navbar navbar-default my-navbar-header" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="/" class="navbar-brand">Purrcipes</a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#my-navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">More</span>
+                    <a href="#">
+                        <span></span>
+                    </a>
+                </button>
+            </div>
+            
+            <!-- Collect the nav links and search forms for toggling -->
+            <div class="navbar-collapse collapse" id="my-navbar-collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li class="dropdown dropdown-caret-menu hidden-xs">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Browse <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/members">Members</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            {{#each getRecipeGroups}}
+                            <li>
+                                <a href="/{{group_url}}">
+                                    {{group}}
+                                </a>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </li>
+                    
+                    <li class="visible-xs">
+                        <a href="/members"><i class="fa fa-user-circle-o fa-fw" aria-hidden="true"></i> Members</a>
+                    </li>
+                    
+                    <li>
+                        <form class="navbar-form js-search-recipe" id="dLabel">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search recipe" aria-describedby="sizing-addon2" id="SearchName" index=recipesIndex autocomplete="off">
+                                <span class="input-group-btn" id="sizing-addon2">
+                                    <button class="btn btn-primary btn-submit" type="submit">
+                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
+                        <ul class="dropdown-menu" id="searching" aria-labelledby="dLabel">
+                            {{#if showResults}}
+                                {{#each showResults}}
+                                <li>
+                                    <a href="/{{group_url}}/{{url}}">{{recipe_name}}</a>
+                                </li>
+                                {{/each}}
+                            {{else}}
+                                <li class="no-results">
+                                    No results found!
+                                </li>
+                            {{/if}}
+                        </ul>
+                        <ul class="dropdown-menu" id="emptySearch" aria-labelledby="dLabel">
+                            <li class="no-results">
+                                Duh! Type something!
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <ul class="nav navbar-nav navbar-right">
+                    {{#if currentUser}}
+                    <li class="user-avatar hidden-xs">
+                        <a href="/my-page">
+                            <p>{{currentUser.username}}</p>
+                            <img src="{{currentUser.avatar}}">
+                        </a>
+                    </li>
+                    
+                    <li class="user-border hidden-xs">
+                        <div class="user-left-border">&nbsp;</div>
+                    </li>
+                    <li class="dropdown user-login hidden-xs">
+                        <a href="#" class="dropdown-caret" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/my-page">Favourite recipes</a>
+                            </li>
+                            <li>
+                                <a href="/my-page/my-recipes">My own recipes</a>
+                            </li>
+                            <li>
+                                <a href="/my-page/share-recipe">Share a recipe</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="/my-page/settings">Settings</a>
+                            </li>
+                            <li>
+                                <a href="#" class="logout">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li class="visible-xs">
+                        <a href="/my-page"><i class="fa fa-heart fa-fw" aria-hidden="true"></i> Favourite recipes</a>
+                    </li>
+                    <li class="visible-xs">
+                        <a href="/my-page/my-recipes"><i class="fa fa-book fa-fw" aria-hidden="true"></i> My own recipes</a>
+                    </li>
+                    <li class="visible-xs">
+                        <a href="/my-page/share-recipe"><i class="fa fa-plus fa-fw" aria-hidden="true"></i> Share a recipe</a>
+                    </li>
+                    
+                    <li role="separator" class="divider visible-xs"></li>
+                    
+                    <li class="visible-xs">
+                        <a href="/my-page/settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> Settings</a>
+                    </li>
+                    <li class="visible-xs">
+                        <a href="#" class="logout"><i class="fa fa-sign-out fa-fw" aria-hidden="true"></i> Logout</a>
+                    </li>
+                    {{else}}
+                    
+                    <li class="dropdown user-login">
+                        {{> register}}
+                    </li>
+                    
+                    <li class="dropdown user-login">
+                        {{> login}}
+                    </li>
+                    {{/if}}
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+    </script>
+</template>

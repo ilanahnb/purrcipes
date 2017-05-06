@@ -1,0 +1,173 @@
+<template name="my_settings">
+    
+    <header class="my-intro-header">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-xs-12 visible-600px">
+                    <div class="page-heading">
+                        <h1>
+                            {{currentUser.username}}
+                        </h1>
+                    </div>
+                </div>
+                
+                <div class="col-xs-8">
+                    <div class="page-heading">
+                        <div class="wrap-user-avatar">
+                            <img src="{{currentUser.avatar}}" class="img-thumbnail" id="avatar-img">
+                            {{> change_avatar}}
+                        </div>
+                        <h1 class="hidden-600px">
+                            {{currentUser.username}}
+                        </h1>
+                    </div>
+                </div>
+                
+                <div class="col-xs-4">
+                    <div class="btn-group-vertical btn-group-lg pull-right hidden-xs" role="group" aria-label="...">
+                        <a class="btn btn-danger" href="/my-page" role="button"><i class="fa fa-heart fa-fw" aria-hidden="true"></i> Favourite recipes</a>
+                        <a class="btn btn-danger" href="/my-page/my-recipes" role="button"><i class="fa fa-book fa-fw" aria-hidden="true"></i> My own recipes</a>
+                        <a class="btn btn-danger" href="/my-page/share-recipe" role="button"><i class="fa fa-plus fa-fw" aria-hidden="true"></i> Share a recipe</a>
+                        <a class="btn btn-danger active" href="/my-page/settings" role="button"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i> Settings</a>
+                    </div>
+                    
+                    <div class="btn-group-vertical btn-group pull-right visible-xs" role="group" aria-label="...">
+                        <a class="btn btn-danger" href="/my-page" role="button"><i class="fa fa-heart fa-fw" aria-hidden="true"></i> Favourite recipes</a>
+                        <a class="btn btn-danger" href="/my-page/my-recipes" role="button"><i class="fa fa-book fa-fw" aria-hidden="true"></i> My own recipes</a>
+                        <a class="btn btn-danger" href="/my-page/share-recipe" role="button"><i class="fa fa-plus fa-fw" aria-hidden="true"></i> Share a recipe</a>
+                        <a class="btn btn-danger active" href="/my-page/settings" role="button"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i> Settings</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </header>
+    
+    <div class="container my-settings">
+        
+        <div class="row my-page-row">
+            <div class="col-xs-12 col-white-box">
+                <h2>Settings</h2>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12 col-white-box">
+                <h3>Account Settings</h3>
+                <hr>
+                
+                <!-- change username -->
+                <div class="my-settings-edit">
+                    <p><b>Username</b></p>
+                    <p>{{currentUser.username}}</p>
+                    <a class="js-edit" data-toggle="collapse" href="#collapseUsername" aria-expanded="false" aria-controls="collapseUsername">Edit</a>
+                </div>
+                <div class="collapse edit-collapse" id="collapseUsername">
+                    <div class="well">
+                        <input type="text" class="form-control" id="changeUsername" value="{{currentUser.username}}">
+                        
+                        <div class="alert alert-danger" role="alert" id="change-username-error-msg"></div>
+                        
+                        <div class="edit-buttons">
+                            <button type="button" class="btn btn-default btn-sm js-edit-cancel" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary btn-sm js-change-username" data-loading-text="Changing...">Change username</button>
+                        </div>
+                    </div>
+                </div><!-- /change username -->
+                
+                <!-- change email -->
+                <div class="my-settings-edit">
+                    <p><b>Email</b></p>
+                    <p>{{getEmail}}</p>
+                    <a class="js-edit" data-toggle="collapse" href="#collapseEmail" aria-expanded="false" aria-controls="collapseEmail">Edit</a>
+                </div>
+                <div class="collapse edit-collapse" id="collapseEmail">
+                    <div class="well">
+                        <input type="text" class="form-control" id="changeEmail" value="{{getEmail}}">
+                        
+                        <div class="alert alert-danger" role="alert" id="change-email-error-msg"></div>
+                        
+                        <div class="edit-buttons">
+                            <button type="button" class="btn btn-default btn-sm js-edit-cancel" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary btn-sm js-change-email" data-loading-text="Changing...">Change email</button>
+                        </div>
+                    </div>
+                </div><!-- /change email -->
+                
+                <!-- change password -->
+                <div class="my-settings-edit">
+                    <p><b>Password</b></p>
+                    <a class="js-edit" data-toggle="collapse" href="#collapsePassword" aria-expanded="false" aria-controls="collapsePassword">Edit</a>
+                </div>
+                <div class="collapse edit-collapse" id="collapsePassword">
+                    <div class="well">
+                        <form class="js-change-password">
+                            <label for="user-current-password">Current Password</label>
+                            <input type="password" class="form-control" id="user-current-password">
+
+                            <label for="user-new-password">New Password</label>
+                            <input type="password" class="form-control" id="user-new-password">
+
+                            <label for="user-new-password-again">Confirm New Password</label>
+                            <input type="password" class="form-control" id="user-new-password-again">
+                            
+                            <div class="alert alert-danger" role="alert" id="change-password-error-msg"></div>
+                            <div class="alert alert-success" role="alert" id="change-password-success-msg"></div>
+                                
+                            <div class="edit-buttons">
+                                <button type="button" class="btn btn-default btn-sm js-edit-cancel" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary btn-sm js-save-new-password" data-loading-text="Changing...">Change password</button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /change password -->
+                
+                <!-- delete account -->
+                <div class="my-settings-edit">
+                    <p><b>Delete account</b></p>
+                    <a class="js-edit" data-toggle="collapse" href="#collapseDeleteAccount" aria-expanded="false" aria-controls="collapseDeleteAccount">Edit</a>
+                </div>
+                <div class="collapse edit-collapse" id="collapseDeleteAccount">
+                    <div class="well">
+                        <p>Deleting your account will remove your profile, but all the recipes and pictures you've shared on Purrcipes will remain. Your comments will still be visible to others.</p>
+                        <div class="edit-buttons">
+                            <button type="button" class="btn btn-default btn-sm js-edit-cancel" data-dismiss="modal">Cancel</button>
+                            {{> delete_account}}
+                        </div>
+                    </div>
+                </div><!-- /delete account -->
+            </div>
+        </div>
+        
+    </div>
+    
+</template>
+
+
+<template name="delete_account">
+    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteAccountModal">Delete account</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="deleteAccountModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content text-left">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-times"></i>
+                    </button>
+                    <h4 class="modal-title">Delete account permanently?</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you really sure you want to permanently delete your account forever?</p>
+                    <p>This can never ever be undone... <i class="fa fa-frown-o" aria-hidden="true"></i></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Keep account</button>
+                    <button type="button" class="btn btn-danger js-delete-account" data-loading-text="Deleting account...">Delete account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</template>

@@ -1,0 +1,223 @@
+<template name="the_recipe">
+    
+    <div class="container the-recipe">
+        
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="/">Recipes</a></li>
+                <li><a href="/{{group_url}}">{{group}}</a></li>
+                <li class="active">{{recipe_name}}</li>
+            </ol>
+        </div>
+    
+        <div class="wrap">
+            
+            <div class="spy-top">
+                <img src="/cat_spy_top.png">
+            </div>
+
+            <div class="spy">
+                <img src="/cat_spy_side.png">
+            </div>
+            
+            <div class="recipe">
+
+                <h2 class="lede">{{recipe_name}}</h2>
+
+                <div class="row">
+                    <div class="col-md-7 the-recipe-picture">
+                        <img src="{{recipe_picture}}" class="img-responsive">
+                    </div>
+                    
+                    <div class="col-md-5 col-no-padding the-recipe-description">
+                        <div class="col-xs-12">
+                            <p class="description text-justify">{{recipe_description}}</p>
+                        </div>
+                        <div class="col-xs-8" data-id={{_id}}>
+                            <p>
+                                {{#if currentUser}}
+                                {{>starsRating rating=rating mutable="true" star="\\f005" class="js-rate-recipe"}}
+                                {{else}}
+                                {{>starsRating rating=rating star="\\f005" class="js-rate-recipe"}}
+                                {{/if}}
+                                <small class="num-votes">{{numVotes}}</small>
+                            </p>
+                            <p>Shared by 
+                                {{#if sharedBy}}
+                                <a href="/members/{{sharedBy}}">{{sharedBy}}</a>.
+                                {{else}}
+                                <i>someone</i>.
+                                {{/if}}
+                            </p>
+                        </div>
+                        {{#if currentUser}}
+                        <div class="col-xs-12">
+                            <div class="btn-toolbar">
+                                <div class="btn-group btn-group" role="group">
+                                    <ul class="dropdown-menu dropdown-share" aria-labelledby="dShare">
+                                        {{>shareit}}
+                                    </ul>
+                                    {{#if isFavourite}}
+                                    <button type="button" class="btn btn-danger js-make-favourite" data-loading-text="Removing...">
+                                        <i class="fa fa-heart fa-lg" aria-hidden="true"></i> Saved
+                                    </button>
+                                    {{else}}
+                                    <button type="button" class="btn btn-default js-make-favourite" data-loading-text="Saving...">
+                                        <i class="fa fa-heart-o fa-lg" aria-hidden="true"></i> Save
+                                    </button>
+                                    {{/if}}
+                                </div>
+                                <div class="btn-group btn-group-sm pull-right" role="group">
+                                    {{#if createdByCurrentUser}}
+                                        {{> edit_recipe_form}}
+
+                                        {{> delete_recipe_button}}
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-md-push-7 the-recipe-ingredients">
+                        <div class="col-md-12 col-sm-no-padding">
+                            <h4 class="title text-center">INGREDIENTS</h4>
+                            <div>
+                                <ul class="ingredients text-justify">
+                                    {{{getIngredients}}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-7 col-md-pull-4 the-recipe-directions">
+                        <h4 class="title text-center">DIRECTIONS</h4>
+                        <div>
+                            <ol class="directions text-justify">
+                                {{{getDirections}}}
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="comment-section">
+                        {{> commentsBox id=_id commentListTemplate="comments_list" singleCommentTemplate="single_comment"}}
+                    </div>
+                </div>
+
+            </div><!-- /end .recipe -->
+        </div><!-- /end .wrap -->
+    </div>
+</template>
+
+
+<template name="comments_list">
+    <div class="media-list comments">
+    {{#each comment}}
+        {{> commentsSingleComment}}
+    {{/each}}
+    </div>
+
+    {{#if hasMoreComments}}
+    <button type="button" class="btn btn-primary btn-block loadmore-action">{{ take key='load-more' default='Show more comments' }}</button>
+    {{/if}}
+</template>
+
+
+<template name="single_comment">
+    <div class="media">
+        <div class="media-left">
+            <img alt="Avatar of {{user.displayName}}" class="img-responsive img-avatar" src="{{avatarUrl}}" />
+        </div>
+        
+        <div class="media-body comment {{#if isOwnComment}}own-comment{{/if}}">
+            <h4 class="media-heading">
+                <a href="/members/{{user.displayName}}">{{user.displayName}} <small>{{createdAgo}}</small></a>
+            </h4>
+            
+            <div class="content">
+                <p class="comment-content" data-id="{{commentId}}">
+                {{#if uiConfigGet 'markdown'}}
+                    <div class="text-span">{{#markdown}}{{content}}{{/markdown}}</div>
+                {{else}}
+                    <div class="text-span">{{{enhancedContent}}}</div>
+                {{/if}}
+                </p>
+
+                {{#if media.content}}
+                <div class="content-media">
+                    {{{mediaContent}}}
+                </div>
+                {{/if}}
+
+                <div class="actions btn-group btn-group-xs">              
+                    {{#unless isOwnComment}}
+                    <div class="btn like-action {{#if hasLiked}}active btn-primary{{else}}btn-default{{/if}}">
+                        {{likesCount}} 
+                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                    </div>
+                    {{/unless}}
+
+                    {{#if allowReplies _id }}
+                    <div class="btn btn-default reply-action" aria-label="Left Align">
+                        {{ take key='reply' default='Reply' }}
+                    </div>
+                    {{/if}}
+
+                    {{#if isChangeable}}
+                        {{#if isEditable}}
+                        <div class="btn btn-default save-action" aria-label="Left Align">
+                            {{ take key='save' default='Save' }}
+                        </div>
+                        {{else}}
+                        <div class="btn btn-default edit-action" aria-label="Left Align">
+                            {{ take key='edit' default='Edit' }}
+                        </div>
+                        {{/if}}
+                        <!-- Button trigger modal to confirm delete -->                            
+                        <div class="btn btn-danger confirm-remove" aria-label="Left Align" data-toggle="modal" data-target="#removeModal">
+                            Remove
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                        <h4 class="modal-title">Remove comment?</h4>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-danger remove-action" id="">
+                                            {{ take key='remove' default='Remove' }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
+                    {{/if}}
+                </div>
+            </div>
+
+            {{#if addReply}}
+            <div class="create-reply">
+                {{> textarea reply=true scope=this }}
+            </div>
+            {{/if}}
+
+            {{#if reply}}
+                {{#each reply}}
+                    {{> single_comment }}
+                {{/each}}
+            {{/if}}
+        </div>
+    </div>
+</template>

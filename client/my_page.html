@@ -1,0 +1,129 @@
+<template name="my_page">
+    
+    <header class="my-intro-header">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-xs-12 visible-600px">
+                    <div class="page-heading">
+                        <h1>
+                            {{currentUser.username}}
+                        </h1>
+                    </div>
+                </div>
+                
+                <div class="col-xs-8">
+                    <div class="page-heading">
+                        <div class="wrap-user-avatar">
+                            <img src="{{currentUser.avatar}}" class="img-thumbnail" id="avatar-img">
+                            {{> change_avatar}}
+                        </div>
+                        <h1 class="hidden-600px">
+                            {{currentUser.username}}
+                        </h1>
+                    </div>
+                </div>
+                
+                <div class="col-xs-4">
+                    <div class="btn-group-vertical btn-group-lg pull-right hidden-xs" role="group" aria-label="...">
+                        <a class="btn btn-danger active" href="/my-page" role="button"><i class="fa fa-heart fa-fw" aria-hidden="true"></i> Favourite recipes</a>
+                        <a class="btn btn-danger" href="/my-page/my-recipes" role="button"><i class="fa fa-book fa-fw" aria-hidden="true"></i> My own recipes</a>
+                        <a class="btn btn-danger" href="/my-page/share-recipe" role="button"><i class="fa fa-plus fa-fw" aria-hidden="true"></i> Share a recipe</a>
+                        <a class="btn btn-danger" href="/my-page/settings" role="button"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i> Settings</a>
+                    </div>
+                    
+                    <div class="btn-group-vertical btn-group pull-right visible-xs" role="group" aria-label="...">
+                        <a class="btn btn-danger active" href="/my-page" role="button"><i class="fa fa-heart fa-fw" aria-hidden="true"></i> Favourite recipes</a>
+                        <a class="btn btn-danger" href="/my-page/my-recipes" role="button"><i class="fa fa-book fa-fw" aria-hidden="true"></i> My own recipes</a>
+                        <a class="btn btn-danger" href="/my-page/share-recipe" role="button"><i class="fa fa-plus fa-fw" aria-hidden="true"></i> Share a recipe</a>
+                        <a class="btn btn-danger" href="/my-page/settings" role="button"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i> Settings</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        
+        <div class="row my-page-row">
+            <div class="col-xs-12 col-white-box">
+                <h2>My favourite recipes</h2>
+                <hr class="small">
+                {{#if countFavourites}}
+                    <p>
+                        I have
+                        {{{countFavourites}}}
+                    </p>
+                {{else}}
+                    <p>I don't have any favourite recipes yet...</p>
+                {{/if}}
+            </div>
+        </div>
+        
+        {{#each getFavourites}}
+            {{> recipe_item_favourites}}
+        {{/each}}
+        
+        {{#if showMoreRecipes}}
+        <div class="row bottom-button">
+            <button type="button" class="btn btn-primary btn-block js-load-more-recipes">
+                Show more recipes
+            </button>
+        </div>
+        {{/if}}
+        {{#if hasManyRecipes}}
+        <div class="text-center bottom-button">
+            <p>
+                <a type="button" class="btn btn-primary js-to-the-top">
+                    <i class="fa fa-arrow-up fa-fw" aria-hidden="true"></i> Back to top
+                </a>
+            </p>
+        </div>
+        {{/if}}
+    </div>
+    
+</template>
+
+
+<template name="recipe_item_favourites">
+    <div class="row" id="{{recipe_name}}">
+        <div class="col-xs-12 col-recipe" id="{{recipe_name}}">
+            <div class="col-sm-4 col-md-3">
+                <a href="/{{group_url}}/{{url}}">
+                    <img src="{{recipe_picture}}" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-xs-8 col-sm-6 col-md-7" data-id={{_id}}>
+                <a href="/{{group_url}}/{{url}}">
+                    <h4>{{recipe_name}}</h4>
+                </a>
+                {{>starsRating rating=rating mutable="true" star="\\f005" class="js-rate-recipe"}}
+                <small class="num-votes">{{numVotes}}</small>
+            </div>
+            <div class="col-xs-4 col-sm-2">
+                <button type="button" class="btn btn-danger btn-sm pull-right js-remove-favourite" data-loading-text="<i class='fa fa-spinner fa-spin '></i>" data-toggle="tooltip" data-placement="top" title="Remove from favourites">
+                    <i class="fa fa-times fa-lg hidden-xs"></i>
+                    <i class="fa fa-times visible-xs"></i>
+                </button>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-7">
+                <p>{{recipe_description}}</p>
+                <p>Shared by 
+                    {{#if sharedBy}}
+                    <a href="/members/{{sharedBy}}">{{sharedBy}}</a>
+                    {{else}}
+                    <i>someone</i>
+                    {{/if}}
+                    on {{createdOn}}
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</template>

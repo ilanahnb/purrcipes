@@ -1,0 +1,167 @@
+<template name="share_recipe">
+    
+    <header class="my-intro-header">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-xs-12 visible-600px">
+                    <div class="page-heading">
+                        <h1>
+                            {{currentUser.username}}
+                        </h1>
+                    </div>
+                </div>
+                
+                <div class="col-xs-8">
+                    <div class="page-heading">
+                        <div class="wrap-user-avatar">
+                            <img src="{{currentUser.avatar}}" class="img-thumbnail" id="avatar-img">
+                            {{> change_avatar}}
+                        </div>
+                        <h1 class="hidden-600px">
+                            {{currentUser.username}}
+                        </h1>
+                    </div>
+                </div>
+                
+                <div class="col-xs-4">
+                    <div class="btn-group-vertical btn-group-lg pull-right hidden-xs" role="group" aria-label="...">
+                        <a class="btn btn-danger" href="/my-page" role="button"><i class="fa fa-heart fa-fw" aria-hidden="true"></i> Favourite recipes</a>
+                        <a class="btn btn-danger" href="/my-page/my-recipes" role="button"><i class="fa fa-book fa-fw" aria-hidden="true"></i> My own recipes</a>
+                        <a class="btn btn-danger active" href="/my-page/share-recipe" role="button"><i class="fa fa-plus fa-fw" aria-hidden="true"></i> Share a recipe</a>
+                        <a class="btn btn-danger" href="/my-page/settings" role="button"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i> Settings</a>
+                    </div>
+                    
+                    <div class="btn-group-vertical btn-group pull-right visible-xs" role="group" aria-label="...">
+                        <a class="btn btn-danger" href="/my-page" role="button"><i class="fa fa-heart fa-fw" aria-hidden="true"></i> Favourite recipes</a>
+                        <a class="btn btn-danger" href="/my-page/my-recipes" role="button"><i class="fa fa-book fa-fw" aria-hidden="true"></i> My own recipes</a>
+                        <a class="btn btn-danger active" href="/my-page/share-recipe" role="button"><i class="fa fa-plus fa-fw" aria-hidden="true"></i> Share a recipe</a>
+                        <a class="btn btn-danger" href="/my-page/settings" role="button"><i class="fa fa-cogs fa-fw" aria-hidden="true"></i> Settings</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        
+        <div class="row my-page-row">
+            <div class="col-xs-12 col-white-box">
+                <h2>Share a new recipe</h2>
+                <hr class="small">
+                <p>Complete the form to share a recipe! Everyone will be able to see it. You can edit or delete it later.</p>
+            </div>
+        </div>
+        
+    {{> recipe_form}}
+    </div>
+    
+</template>
+
+
+<template name="recipe_form">
+    
+    <div class="share-recipe">
+        <form class="js-new-recipe-form">
+            <div class="row col-white-box">
+                <div class="col-md-8 col-no-padding">
+                    <div class="col-sm-6 col-vertical-padding">
+                        <label for="RecipeName">Recipe name</label>
+                        <input type="text" class="form-control" id="RecipeName">
+                        <div class="alert alert-danger my-alert" role="alert" id="emptyName">Oh no! The recipe doesn't have a name!</div>
+                        <div class="alert alert-danger my-alert" role="alert" id="uniqueName">This name is taken! Please write a different name.</div>
+                    </div>
+
+                    <div class="col-sm-6 col-vertical-padding">
+                        <label for="RecipeCategory">Category</label>
+                        <select class="form-control" id="RecipeCategory">
+                            <option>-- Choose --</option>
+                            <option>Breakfast</option>
+                            <option>Desserts</option>
+                            <option>Drinks</option>
+                            <option>Healthy</option>
+                            <option>Main Course</option>
+                            <option>Meats</option>
+                            <option>Snacks</option>
+                            <option>Soups and Stews</option>
+                        </select>
+                        <div class="alert alert-danger my-alert" role="alert" id="emptyCategory">What type of recipe is it?</div>
+                    </div>
+
+                    <div class="col-sm-12 col-vertical-padding">
+                        <label for="RecipeDescription">Description</label>
+                        <textarea class="form-control" id="RecipeDescription" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="RecipePicture">Add Picture</label>
+                    {{> uploadForm}}
+                    
+                    {{> uploadedFile}}
+                    
+                    <div class="alert alert-danger my-alert" role="alert" id="emptyPicture">Please add a picture.</div>
+                </div>
+            </div>
+
+            <div class="row col-white-box">
+                <div class="col-md-3">
+                    <label for="RecipeIngredients">Ingredients</label>
+                    <p class="help-block">
+                        Don't use hyphen, number or marker to separate the ingredients.<br/>
+                        Type one ingredient per line.
+                    </p>
+                </div>
+                <div class="col-md-9">
+                    <textarea class="form-control" id="RecipeIngredients" rows="6"></textarea>
+                    <div class="alert alert-danger my-alert" role="alert" id="emptyIngredients">Please add at least one ingredient.</div>
+                </div>
+            </div>
+
+            <div class="row col-white-box">
+                <div class="col-md-3">
+                    <label for="RecipeDirections">Directions</label>
+                    <p class="help-block">
+                        Don't use hyphen, number or marker to separate the steps.<br/>
+                        Type one direction per line.
+                    </p>
+                </div>
+                <div class="col-md-9">
+                    <textarea class="form-control" id="RecipeDirections" rows="6"></textarea>
+                    <div class="alert alert-danger my-alert" role="alert" id="emptyDirections">Please write the directions.</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-danger center-block" data-loading-text="Sharing..." id="submit-new-recipe">Share recipe!</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+</template>
+
+<template name="uploadForm">
+    {{#with currentUpload}}
+    <p>
+        <small><code>Uploading <b>{{file.name}}</b> ... <span id="progress">{{progress.get}}%</span></code></small>
+    </p>
+    {{else}}
+    <input type="file" name="file" id="fileInput" class="inputfile" />
+    <label for="fileInput"><i class="fa fa-upload" aria-hidden="true"></i> &nbsp; Choose a picture</label>
+    <p><small>Upload file in <code>jpeg</code> or <code>png</code> format, with size less or equal to 2MB</small></p>
+    {{/with}}
+</template>
+
+<template name="uploadedFile">
+    {{#if uploadedFile}}
+    <div class="uploadedImage">
+        <img src="{{uploadedFile.link}}?download=true" class="img-responsive" id="{{imageId}}">
+        <button type="button" class="btn btn-danger js-delete-picture" data-loading-text="<i class='fa fa-spinner fa-spin'></i>">
+            <i class="fa fa-times"></i>
+        </button>
+    </div>
+    {{/if}}
+</template>
